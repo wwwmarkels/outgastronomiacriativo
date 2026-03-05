@@ -1,0 +1,1138 @@
+<<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#E7E5DB" />
+  <title>Outcast Creative | Construindo Marcas-Destino na Gastronomia</title>
+  <meta name="description" content="Estratégia 360º, RP e Branding com Alma. Transformamos seu restaurante em uma comunidade apaixonada e no destino mais cobiçado da cidade." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&family=Inter:wght@300;400;600;700;800&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+      --font-heading: 'new-spirit', 'Playfair Display', serif;
+
+      --primary: #004EAD;
+      --primary-hover: #00367a;
+      --ink: #634438;
+      --accent: #FFE075;
+      --bg: #E7E5DB;
+      --soft: #ffffff;
+
+      --stroke: rgba(99, 68, 56, 0.12);
+      --stroke-light: rgba(255, 255, 255, 0.15);
+
+      --radius: 16px;
+      --radius-lg: 32px;
+      --max: 1280px;
+      --nav-height: 100px;
+
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+
+      --pad-x: clamp(18px, 3.5vw, 5%);
+      --section-y: clamp(64px, 7vw, 120px);
+
+      --hero-gap: clamp(28px, 4vw, 60px);
+      --hero-pad-top: clamp(118px, 12vw, 160px);
+      --hero-pad-bottom: clamp(56px, 7vw, 90px);
+
+      /* FAQ */
+      --faq-bg: #f4f0e6;
+      --faq-border: #c8c3b6;
+      --faq-divider: #d6d2c7;
+      --faq-hover: #cde7ff;
+      --faq-plus: #1a66cc;
+    }
+
+    * { box-sizing: border-box; scroll-behavior: smooth; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 30px var(--pad-x);
+      position: relative;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    :focus-visible {
+      outline: 3px solid rgba(0, 78, 173, 0.45);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .reveal { transition: none !important; transform: none !important; opacity: 1 !important; }
+      .hero-badge { animation: none !important; }
+      .marquee-content { animation: none !important; }
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 22px 34px; border-radius: 999px; font-family: var(--font-body);
+      font-weight: 800; font-size: 14px; text-decoration: none; text-transform: uppercase; letter-spacing: 1.5px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; border: 2px solid transparent;
+      min-height: 52px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .btn.primary { background: var(--primary); color: #fff; box-shadow: 0 10px 30px rgba(0, 78, 173, 0.2); }
+    .btn.primary:hover { background: var(--primary-hover); transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0, 78, 173, 0.35); }
+
+    .btn.outline { border-color: var(--ink); color: var(--ink); background: transparent; }
+    .btn.outline:hover { background: var(--ink); color: var(--bg); transform: translateY(-4px); }
+
+    .tag-pill {
+      font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 2.5px;
+      display: inline-block; padding: 8px 20px; border-radius: 999px; margin-bottom: 24px;
+      background: rgba(0, 78, 173, 0.08); color: var(--primary); border: 1px solid rgba(0, 78, 173, 0.15);
+      white-space: nowrap;
+    }
+    .tag-pill.dark { background: rgba(255,224,117,0.1); color: var(--accent); border-color: rgba(255,224,117,0.2); }
+
+    /* NAV */
+    nav {
+      height: var(--nav-height);
+      width: 100%;
+      display: flex; align-items: center;
+      position: fixed; top: 0; left: 0; z-index: 1000;
+      padding-top: var(--safe-top);
+      background: rgba(231, 229, 219, 0.85);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--stroke);
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      height: 80px;
+      box-shadow: 0 10px 40px rgba(99, 68, 56, 0.08);
+      background: rgba(231, 229, 219, 0.95);
+    }
+    .nav-inner { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+    .logo-img { height: 68px; object-fit: contain; transition: height 0.4s ease; transform-origin: left center; }
+    nav.scrolled .logo-img { height: 50px; }
+
+    .nav-actions { display: flex; align-items: center; gap: 32px; }
+    .nav-link {
+      font-weight: 700; color: var(--ink); text-decoration: none; font-size: 14px;
+      text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s;
+    }
+    .nav-link:hover { color: var(--primary); }
+
+    .nav-toggle {
+      display: none;
+      width: 46px; height: 46px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .nav-toggle span {
+      width: 18px; height: 2px; background: var(--ink);
+      display: block; border-radius: 2px; position: relative;
+    }
+    .nav-toggle span::before, .nav-toggle span::after {
+      content: ""; position: absolute; left: 0;
+      width: 18px; height: 2px; background: var(--ink); border-radius: 2px;
+    }
+    .nav-toggle span::before { top: -6px; }
+    .nav-toggle span::after { top: 6px; }
+
+    .mobile-drawer {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.35);
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s ease;
+      z-index: 1100;
+    }
+    .mobile-drawer.active { opacity: 1; pointer-events: auto; }
+    .mobile-panel {
+      position: absolute; top: 0; right: 0;
+      height: 100%;
+      width: min(92vw, 420px);
+      background: rgba(231, 229, 219, 0.96);
+      backdrop-filter: blur(18px);
+      border-left: 1px solid var(--stroke);
+      padding: calc(18px + var(--safe-top)) 18px calc(18px + var(--safe-bottom)) 18px;
+      transform: translateX(12px);
+      transition: transform .25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .mobile-drawer.active .mobile-panel { transform: translateX(0); }
+    .mobile-close {
+      align-self: flex-end;
+      width: 46px; height: 46px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.6);
+      cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 700; color: var(--ink);
+      touch-action: manipulation;
+    }
+    .mobile-links a {
+      display: block;
+      padding: 14px 14px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--ink);
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.55);
+    }
+    .mobile-links a + a { margin-top: 10px; }
+    .mobile-links a:hover { border-color: rgba(0, 78, 173, 0.35); }
+
+    /* HERO */
+    .hero {
+      padding: calc(var(--hero-pad-top) + var(--safe-top)) 0 var(--hero-pad-bottom);
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--hero-gap);
+      align-items: start;
+    }
+    .hero-content { padding-top: 8px; }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(40px, 5.6vw, 78px);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 22px;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .hero-highlight { color: var(--primary); font-style: normal; }
+
+    .hero p {
+      font-size: clamp(18px, 1.35vw, 20px);
+      opacity: 0.85;
+      margin-bottom: 40px;
+      font-weight: 400;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .hero-visual { position: relative; }
+    .hero-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: var(--radius);
+      box-shadow: 0 40px 80px rgba(99, 68, 56, 0.15);
+      transform: rotate(1.5deg);
+      transition: transform 0.6s ease;
+    }
+    .hero-visual:hover .hero-img { transform: rotate(0deg) scale(1.02); }
+
+    .hero-badge {
+      position: absolute;
+      bottom: -28px;
+      left: -28px;
+      background: var(--accent);
+      color: var(--ink);
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      font-weight: 900; font-size: 12px;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      line-height: 1.2;
+      animation: spin 20s linear infinite;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      border: 2px solid var(--stroke);
+      z-index: 2;
+      user-select: none;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* MARQUEE */
+    .marquee-wrapper {
+      background: var(--primary);
+      padding: 22px 0;
+      overflow: hidden;
+      display: flex;
+      white-space: nowrap;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+    }
+    .marquee-content {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+      font-weight: 800; font-size: 15px; letter-spacing: 2.5px; text-transform: uppercase; color: #ffffff;
+      will-change: transform;
+      padding-left: 10px;
+    }
+    .marquee-content span { margin: 0 40px; opacity: 0.55; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* SEÇÕES */
+    section { padding: var(--section-y) 0; }
+    .section-header { margin-bottom: 80px; max-width: 800px; }
+    .section-header.center {
+      text-align: center;
+      margin-left: auto; margin-right: auto;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .section-header h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(34px, 4.5vw, 58px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .section-header p {
+      font-size: clamp(18px, 1.4vw, 20px);
+      opacity: 0.8;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    /* CONCORRÊNCIA */
+    .section-dark { background-color: var(--ink); color: var(--soft); }
+    .section-dark .section-header p { opacity: 0.8; }
+
+    .attack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .attack-card {
+      background: rgba(255,255,255,0.04);
+      padding: 50px 40px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke-light);
+      border-top: 4px solid var(--stroke-light);
+      transition: all 0.4s ease;
+      display: flex; flex-direction: column;
+      min-height: 100%;
+    }
+    .attack-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-8px); }
+    .attack-card h3 { font-family: var(--font-heading); font-size: 26px; margin-bottom: 16px; color: #fff; }
+    .attack-card p { font-size: 16px; opacity: 0.7; line-height: 1.6; margin-bottom: 30px; flex-grow: 1; }
+    .verdict {
+      font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
+      color: #ff6b6b;
+      display: flex; align-items: center; gap: 8px;
+      border-top: 1px solid var(--stroke-light);
+      padding-top: 24px;
+      margin-top: auto;
+    }
+
+    .attack-card.outcast-model {
+      background: var(--primary);
+      border-color: var(--primary);
+      border-top-color: var(--accent);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+      transform: scale(1.02);
+    }
+    .attack-card.outcast-model:hover { transform: scale(1.04) translateY(-8px); background: var(--primary-hover); }
+    .attack-card.outcast-model h3 { color: #fff; }
+    .attack-card.outcast-model p { opacity: 0.9; }
+    .attack-card.outcast-model .verdict { color: var(--accent); border-top-color: rgba(255,255,255,0.2); }
+
+    /* FOUNDERS */
+    .founders-block {
+      background: var(--soft);
+      border-radius: var(--radius-lg);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+      align-items: center;
+      border: 1px solid var(--stroke);
+      box-shadow: 0 40px 80px rgba(99, 68, 56, 0.05);
+    }
+    .founders-info h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .founders-info p {
+      font-size: clamp(16px, 1.2vw, 18px);
+      opacity: 0.85;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .founders-profiles {
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid var(--stroke);
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .profile strong { color: var(--primary); display: block; font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+    .profile span { font-size: 13px; font-weight: 700; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+
+    .founders-img {
+      width: 100%;
+      border-radius: var(--radius);
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      box-shadow: 0 20px 40px rgba(99, 68, 56, 0.15);
+    }
+
+    /* MÉTODO */
+    .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; }
+    .method-card {
+      background: var(--soft);
+      padding: 60px 48px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .method-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(99, 68, 56, 0.08); border-color: var(--primary); }
+    .method-num {
+      font-family: var(--font-heading);
+      font-size: 80px;
+      color: var(--primary);
+      opacity: 0.08;
+      position: absolute;
+      top: 20px; right: 30px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .method-card h3 {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .method-card p {
+      opacity: 0.8;
+      line-height: 1.6;
+      font-size: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* CASES */
+    .cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; }
+    .case-card {
+      display: flex; flex-direction: column;
+      background: var(--soft);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--stroke);
+      transition: all 0.4s;
+    }
+    .case-card:hover { box-shadow: 0 30px 60px rgba(99, 68, 56, 0.1); transform: translateY(-8px); }
+    .case-media { width: 100%; aspect-ratio: 16/10; overflow: hidden; position: relative; background: #eee; }
+    .case-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+    .case-card:hover .case-media img { transform: scale(1.05); }
+    .case-content { padding: 50px 40px; display: flex; flex-direction: column; flex-grow: 1; }
+    .case-content h3 { font-family: var(--font-heading); font-size: 30px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+    .case-content p { font-size: 16px; opacity: 0.8; margin-bottom: 30px; line-height: 1.6; flex-grow: 1; }
+    .case-metric {
+      display: inline-block;
+      background: rgba(0, 78, 173, 0.06);
+      color: var(--primary);
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 16px;
+      border-left: 4px solid var(--primary);
+    }
+
+    /* FAQ */
+    .faq-wrap { max-width: 1100px; margin: 0 auto; }
+
+    .faq-title { margin-bottom: 34px; }
+    .faq-title h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(34px, 4.5vw, 58px);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .faq-list { border-top: 1px solid var(--faq-divider); }
+
+    .faq-item {
+      border-bottom: 1px solid var(--faq-divider);
+      padding: 48px 0;
+    }
+
+    .faq-question {
+      width: auto;
+      background: var(--faq-bg);
+      border: 1px solid var(--faq-border);
+      padding: 14px 22px;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 34px;
+      color: var(--ink);
+      cursor: pointer;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      transition: background .25s ease, border-color .25s ease, transform .25s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .faq-question:hover {
+      background: var(--faq-hover);
+      border-color: var(--faq-plus);
+      transform: translateY(-1px);
+    }
+
+    .faq-icon {
+      font-size: 34px;
+      line-height: 1;
+      color: var(--faq-plus);
+      font-weight: 700;
+      transform-origin: center;
+      transition: transform .25s ease;
+      flex: 0 0 auto;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .45s ease, opacity .35s ease, margin-top .35s ease;
+      opacity: 0;
+      margin-top: 0;
+
+      font-size: 18px;
+      color: rgba(99, 68, 56, 0.9);
+      line-height: 1.7;
+      max-width: 900px;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 360px;
+      opacity: 1;
+      margin-top: 18px;
+    }
+
+    .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+    /* CTA + CALENDÁRIO */
+    .cta-area { background: var(--primary); padding: clamp(80px, 8vw, 140px) 0; text-align: center; color: #fff; }
+    .cta-area h2 { font-family: var(--font-heading); font-size: clamp(34px, 4.5vw, 60px); font-weight: 900; line-height: 1.1; margin-bottom: 24px; color: #fff; }
+    .cta-area p { font-size: clamp(18px, 1.6vw, 20px); opacity: 0.92; max-width: 650px; margin: 0 auto 50px; font-weight: 300; line-height: 1.6; }
+    .calendar-container {
+      background: #fff;
+      border-radius: var(--radius);
+      height: 750px;
+      max-width: 960px;
+      margin: 0 auto;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .calendar-container iframe { width: 100%; height: 100%; border: none; }
+
+    /* JOINCHAT */
+    .joinchat {
+      position: fixed;
+      bottom: calc(24px + var(--safe-bottom));
+      right: calc(24px + var(--safe-right));
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 16px;
+      padding-left: var(--safe-left);
+    }
+    .chat-bubble {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      color: var(--ink);
+      padding: 24px;
+      border-radius: 20px;
+      border-bottom-right-radius: 4px;
+      width: 300px;
+      box-shadow: 0 20px 50px rgba(99,68,56,0.15);
+      border: 1px solid var(--stroke);
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      transform-origin: bottom right;
+    }
+    .joinchat:hover .chat-bubble { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+    .chat-header { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--stroke); padding-bottom: 16px; }
+    .chat-avatar { width: 44px; height: 44px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: #fff; }
+    .chat-info h4 { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+    .chat-info span { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #25D366; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .chat-info span::before { content: ''; width: 6px; height: 6px; background: #25D366; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.3); opacity: 1; } }
+    .chat-text { font-size: 14px; line-height: 1.5; font-weight: 500; opacity: 0.9; margin-bottom: 20px; }
+    .chat-link { display: block; background: #25D366; color: #fff; text-decoration: none; padding: 14px; border-radius: 8px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; text-align: center; transition: 0.3s; }
+    .chat-link:hover { background: #20b858; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); }
+
+    .chat-trigger {
+      width: 72px; height: 72px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+      text-decoration: none;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .chat-trigger svg { width: 36px; height: 36px; fill: #fff; }
+    .chat-badge { position: absolute; top: -2px; right: -2px; background: #ff3b30; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; border: 3px solid var(--bg); }
+    .chat-trigger:hover { transform: scale(1.08) rotate(-8deg); }
+
+    /* FOOTER */
+    footer { padding: 60px 0 calc(50px + var(--safe-bottom)); border-top: 1px solid var(--stroke); background: var(--soft); }
+    .footer-grid { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 80px; flex-wrap: wrap; gap: 60px; }
+    .footer-logo img { height: 90px; margin-bottom: 24px; }
+    .footer-copy { font-size: 16px; opacity: 0.7; max-width: 360px; line-height: 1.6; }
+    .footer-nav { display: flex; gap: 80px; }
+    .footer-col h5 { font-family: var(--font-heading); font-size: 20px; margin-bottom: 24px; color: var(--ink); }
+    .footer-col a { display: block; text-decoration: none; color: var(--ink); opacity: 0.7; margin-bottom: 14px; font-size: 15px; font-weight: 600; transition: 0.3s; }
+    .footer-col a:hover { opacity: 1; color: var(--primary); padding-left: 5px; }
+    .footer-bottom { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; opacity: 0.5; text-transform: uppercase; letter-spacing: 1.5px; border-top: 1px solid var(--stroke); padding-top: 40px; gap: 18px; flex-wrap: wrap; }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 1024px) {
+      section { padding: clamp(64px, 8vw, 120px) 0; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: clamp(28px, 6vw, 60px);
+        padding: calc(clamp(128px, 14vw, 170px) + var(--safe-top)) 0 clamp(56px, 7vw, 90px);
+      }
+      .hero p { margin: 0 auto 36px; }
+      .hero-actions { justify-content: center; }
+      .hero-img { max-width: 720px; margin: 0 auto; transform: none; }
+      .hero-visual:hover .hero-img { transform: none; }
+      .hero-badge { left: 12px; bottom: -16px; }
+
+      .attack-grid { grid-template-columns: 1fr; }
+
+      .founders-block {
+        grid-template-columns: 1fr;
+        padding: 60px 40px;
+        text-align: center;
+        gap: 46px;
+      }
+      .founders-profiles { justify-content: center; }
+
+      .method-grid, .cases-grid { grid-template-columns: 1fr; gap: 40px; }
+
+      .footer-grid { flex-direction: column; text-align: center; }
+      .footer-logo img { margin: 0 auto 24px; }
+      .footer-nav { flex-wrap: wrap; justify-content: center; width: 100%; }
+    }
+
+    @media (max-width: 768px) {
+      nav { height: 80px; }
+      nav.scrolled { height: 72px; }
+
+      .nav-actions { display: none; }
+      .nav-toggle { display: inline-flex; }
+
+      .logo-img { height: 50px; }
+      nav.scrolled .logo-img { height: 44px; }
+
+      .wrap { padding: 26px var(--pad-x); }
+
+      .hero { padding: calc(120px + var(--safe-top)) 0 56px; }
+
+      .hero h1 { font-size: clamp(36px, 10vw, 46px); line-height: 1.03; margin-bottom: 18px; }
+      .hero p { font-size: 17px; margin-bottom: 28px; max-width: 620px; }
+
+      .btn { width: 100%; padding: 18px 24px; font-size: 13px; min-height: 52px; }
+      .hero-actions { flex-direction: column; width: 100%; }
+
+      .hero-badge { width: 98px; height: 98px; font-size: 10px; bottom: -12px; left: 10px; }
+
+      .attack-card { padding: 38px 22px; }
+      .founders-block { padding: 46px 22px; border-radius: 20px; }
+      .method-card { padding: 38px 22px; }
+      .case-content { padding: 28px 18px; }
+
+      .faq-item { padding: 40px 0; }
+      .faq-question { font-size: 22px; padding: 12px 16px; width: 100%; }
+      .faq-icon { font-size: 26px; }
+      .faq-answer { font-size: 16px; }
+
+      .cta-area { padding: 78px 0; }
+      .calendar-container { height: 820px; border-radius: 18px; }
+
+      .footer-bottom { flex-direction: column; gap: 18px; text-align: center; }
+
+      .chat-bubble { display: none; }
+      .chat-trigger { width: 64px; height: 64px; }
+    }
+
+    @media (max-width: 420px) {
+      .faq-question { font-size: 20px; }
+    }
+
+    @media (max-width: 380px) {
+      .hero p { font-size: 16px; }
+      .tag-pill { font-size: 10px; letter-spacing: 2px; padding: 7px 16px; }
+      .chat-trigger { width: 60px; height: 60px; }
+      .hero-badge { left: 8px; }
+    }
+
+    @media (min-width: 1400px) {
+      .hero p { max-width: 620px; }
+      .attack-grid { gap: 46px; }
+      .method-grid { gap: 56px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav id="navbar" aria-label="Navegação principal">
+    <div class="wrap nav-inner">
+      <img src="https://i.ibb.co/gbsb30M0/image-removebg-preview.png" alt="Outcast Creative Logo" class="logo-img" loading="eager" decoding="async">
+
+      <div class="nav-actions">
+        <a href="#metodo" class="nav-link">Método</a>
+        <a href="#portfolio" class="nav-link">Skin in the game</a>
+        <a href="#agendar" class="btn primary" style="padding: 12px 28px; font-size: 12px; box-shadow: none;">Bate-papo Estratégico</a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-controls="mobileDrawer" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <div class="mobile-panel" role="dialog" aria-label="Menu">
+      <button class="mobile-close" id="navClose" aria-label="Fechar menu">×</button>
+      <div class="mobile-links">
+        <a href="#metodo">Método</a>
+        <a href="#portfolio">Skin in the game</a>
+        <a href="#concorrencia">A Visão</a>
+        <a href="#agendar" class="btn primary" style="width:100%; margin-top: 10px;">Bate-papo Estratégico</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero wrap reveal">
+    <div class="hero-content">
+      <div class="tag-pill">Curitiba & Florianópolis</div>
+
+      <h1>
+        Sua marca é um<br>
+        <span class="hero-highlight">destino cobiçado</span> ou<br>
+        só mais uma no feed?
+      </h1>
+
+      <p>Construímos marcas-destino para o setor gastronômico. Unimos branding com alma, estética autêntica e uma estratégia de influenciadores 360º que transforma clientes em uma comunidade apaixonada.</p>
+
+      <div class="hero-actions">
+        <a href="#agendar" class="btn primary">Agendar agora uma conversa: 15min</a>
+        <a href="#concorrencia" class="btn outline">Conhecer a Abordagem</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <img src="https://static.wixstatic.com/media/675661_a63273ba5a234d9da8ccca11b39ecd24~mv2.jpg" alt="Estratégia Outcast" class="hero-img" loading="lazy" decoding="async">
+      <div class="hero-badge" aria-hidden="true">Skin in<br>The Game</div>
+    </div>
+  </section>
+
+  <div class="marquee-wrapper" aria-label="Destaques">
+    <div class="marquee-content" aria-hidden="true">
+      <span>Branding com Alma</span> <span>•</span>
+      <span>RP & Influenciadores</span> <span>•</span>
+      <span>Marca-Destino</span> <span>•</span>
+      <span>Comunidade Real</span> <span>•</span>
+      <span>Branding com Alma</span> <span>•</span>
+      <span>RP & Influenciadores</span> <span>•</span>
+      <span>Marca-Destino</span> <span>•</span>
+      <span>Comunidade Real</span>
+    </div>
+  </div>
+
+  <section class="section-dark" id="concorrencia">
+    <div class="wrap reveal">
+      <div class="section-header center">
+        <div class="tag-pill dark" style="background: rgba(255,255,255,0.08); color: #fff; border:none;">A Desconexão</div>
+        <h2 style="color: #fff;">Por que é tão difícil criar desejo real?</h2>
+        <p>A maioria das marcas confunde ter seguidores com ter relevância. Veja onde a conexão se perde hoje.</p>
+      </div>
+
+      <div class="attack-grid">
+        <div class="attack-card">
+          <div class="tag-pill dark" style="background: rgba(255,255,255,0.1); color: #fff; border:none;">Métricas de Vaidade</div>
+          <h3>A Panfletagem Digital</h3>
+          <p>Focam em dancinhas e números inflados, contratando influenciadores aleatórios que não conversam com a essência do seu salão.</p>
+          <div class="verdict">✕ Público desqualificado e zero retenção</div>
+        </div>
+
+        <div class="attack-card">
+          <div class="tag-pill dark" style="background: rgba(255,255,255,0.1); color: #fff; border:none;">O Horóscopo Corporativo</div>
+          <h3>O Visual Sem Alma</h3>
+          <p>Falam sobre arquétipos e teorias rasas, entregando uma estética engessada que não gera conexão genuína com quem consome.</p>
+          <div class="verdict">✕ Não cria pertencimento ou relacionamento</div>
+        </div>
+
+        <div class="attack-card outcast-model">
+          <div class="tag-pill" style="background: #fff; color: var(--primary); border:none;">A Trindade Outcast</div>
+          <h3>A Marca-Destino 360º</h3>
+          <p>Mapeamos os influenciadores certos e criamos ações de engajamento orgânico que constroem capital de marca de longo prazo.</p>
+          <div class="verdict" style="color: var(--accent);">✓ O cliente sente orgulho de viver a sua marca</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap reveal" id="sobre">
+    <div class="founders-block">
+      <div class="founders-info">
+        <div class="tag-pill">Nossa Vantagem Desleal</div>
+        <h2>Nós construímos as nossas próprias comunidades.</h2>
+        <p>A grande fraqueza da maioria das agências é olhar para a sua marca apenas de fora. A Outcast nasceu da frustração de ver negócios incríveis operando com uma comunicação genérica.</p>
+        <p>O nosso maior diferencial é a <strong>Empatia Operacional</strong>. Nós operamos nossos próprios negócios na gastronomia e sabemos exatamente como a estética com alma, alinhada à Relações Públicas, transforma clientes casuais em fãs do seu nome.</p>
+
+        <div class="founders-profiles">
+          <div class="profile">
+            <strong>Muri</strong>
+            <span>CEO • Estratégia Business</span>
+          </div>
+          <div class="profile">
+            <strong>Nalu</strong>
+            <span>COO • Branding com Alma</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <img src="https://static.wixstatic.com/media/675661_12f883b76f404b7ba93c2c31e605e9c6~mv2.jpg" alt="Operação Real" class="founders-img" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap reveal" id="metodo">
+    <div class="section-header center">
+      <div class="tag-pill">A Trindade Outcast</div>
+      <h2>Como criamos relevância autêntica.</h2>
+      <p>Nossa metodologia foca em extrair a essência do seu negócio para que ele seja incontestável.</p>
+    </div>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <div class="method-num">01</div>
+        <h3>OUTfoundation</h3>
+        <p>O alicerce da sua cultura. Redefinimos a identidade e o tom de voz da sua marca, curando a sua "crise de identidade" para que você construa um DNA único e memorável.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-num">02</div>
+        <h3>Boutique Visual</h3>
+        <p>Narrativa e audiovisual. Produzimos a estética visceral e mostramos os bastidores humanizados que geram um desejo imediato pelo seu espaço e pelo seu produto.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-num">03</div>
+        <h3>Comunidade & RP</h3>
+        <p>Conexões orgânicas. Orquestramos ações com os parceiros e influenciadores ideais para gerar prova social e um boca a boca forte para o seu salão.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap reveal" id="portfolio">
+    <div class="section-header center">
+      <div class="tag-pill">Portfólio Real</div>
+      <h2>As marcas que construímos.</h2>
+      <p>Histórias reais de construção de comunidade, onde aplicamos nosso método na íntegra para gerar conexão e valor duradouro.</p>
+    </div>
+
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-media">
+          <img src="https://i.ibb.co/8L0mCV3Z/image.png" alt="Penélope Bar" loading="lazy" decoding="async">
+        </div>
+        <div class="case-content">
+          <span class="tag-pill" style="align-self: flex-start; margin-bottom: 24px;">Operação Própria</span>
+          <h3>Penélope Bar</h3>
+          <p>A prova viva do nosso método. Construímos uma marca do absoluto zero, focando 100% em engajamento de comunidade, Relações Públicas e um branding estético inconfundível.</p>
+          <div class="case-metric">R$ 1 Milhão faturado em 12 meses (Orgânico)</div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-media">
+          <img src="https://i.ibb.co/yFwtN8N3/pexels-rehanverma-3053082.jpg" alt="Franquia de Pizzarias" loading="lazy" decoding="async">
+        </div>
+        <div class="case-content">
+          <span class="tag-pill" style="align-self: flex-start; margin-bottom: 24px;">Repicionamento & Conteúdo</span>
+          <h3>Franquia de Pizzarias</h3>
+          <p>Através de uma reestruturação profunda de marca e curadoria de conteúdo autêntico, trouxemos uma nova alma e reforçamos o pertencimento com os clientes locais.</p>
+          <div class="case-metric">Case de Rebranding e Relevância Visual</div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-media">
+          <img src="https://i.ibb.co/LzsgFX1z/pexels-shouravsheikh-5695594.jpg" alt="Grande Rede" loading="lazy" decoding="async">
+        </div>
+        <div class="case-content">
+          <span class="tag-pill" style="align-self: flex-start; margin-bottom: 24px;">RP & Influenciadores</span>
+          <h3>Grande Rede de Franquias</h3>
+          <p>Desenvolvemos uma estratégia 360º de alto impacto, focada em conectar a marca aos criadores e influenciadores certos durante datas sazonais críticas.</p>
+          <div class="case-metric">Amplificação de Alcance e Desejo de Marca</div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-media">
+          <img src="https://i.ibb.co/zT9SwNG8/image.png" alt="Straccia" loading="lazy" decoding="async">
+        </div>
+        <div class="case-content">
+          <span class="tag-pill" style="align-self: flex-start; margin-bottom: 24px;">Operação Própria</span>
+          <h3>Straccia & Carlo</h3>
+          <p>De um conceito bruto a uma verdadeira marca-destino cobiçada em Curitiba. Execução impecável da metodologia OUTfoundation e curadoria refinada de estilo de vida.</p>
+          <div class="case-metric">Case de Consolidação e Experiência de Destino</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap reveal" id="faq">
+    <div class="faq-wrap">
+      <div class="faq-title">
+        <h2>Verdade nua e crua.</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item" data-faq>
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Vocês fazem gestão de "posts" no Instagram?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            Não. O modelo de apenas cumprir tabela com "cronograma de posts" não cria relacionamento. Nós construímos o capital visual da sua marca e rodamos ações focadas em engajamento real. Se você busca só alguém para tapar buracos no feed, não somos a boutique certa.
+          </div>
+        </div>
+
+        <div class="faq-item" data-faq>
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>Para quem é a Outcast?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            Para marcas de gastronomia, especialmente no Sul do Brasil, que têm um produto incrível mas sentem que não construíram uma comunidade fiel. Ajudamos a criar esse desejo e pertencimento, transformando bons restaurantes em destinos cobiçados.
+          </div>
+        </div>
+
+        <div class="faq-item" data-faq>
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span>O que acontece no nosso Bate-Papo?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            É uma conversa leve e sincera. Vamos entender a essência do seu negócio, sua visão de futuro e avaliar se a nossa abordagem de Branding com Alma faz sentido para o seu momento atual.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-area reveal" id="agendar">
+    <div class="wrap">
+      <div class="section-header center">
+        <div class="tag-pill dark" style="background: rgba(255,255,255,0.2); color:#fff; border:none;">Próximo Passo</div>
+        <h2 style="color: #fff;">Vamos construir a sua comunidade?</h2>
+        <p>Agende um bate-papo com nossos estrategistas. Vamos descobrir juntos como transformar o seu restaurante em um lugar que as pessoas amam frequentar, vivenciar e compartilhar.</p>
+      </div>
+
+      <div class="calendar-container">
+        <iframe
+          title="Agendamento de diagnóstico Outcast"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0_uFbW8B-FhnPeGxW30rtR5LPm8l3KRCazSkwLEvwasZHv1-40kA_y5iS-uzkRjNioGIFv9owe?gv=true"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap reveal">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <img src="https://i.ibb.co/gbsb30M0/image-removebg-preview.png" alt="Outcast Creative" loading="lazy" decoding="async">
+          </div>
+          <p class="footer-copy">Boutique de estratégia e branding com alma. Construímos marcas-destino através de estética autêntica, Relações Públicas e conexões reais.</p>
+        </div>
+
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h5>Estratégia</h5>
+            <a href="#metodo">Metodologia</a>
+            <a href="#portfolio">Skin in the Game</a>
+            <a href="#agendar">Conhecer a Outcast</a>
+          </div>
+          <div class="footer-col">
+            <h5>Conecte-se</h5>
+            <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn Muri</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn Nalu</a>
+            <a href="https://instagram.com/outcast.creative/" target="_blank" rel="noopener">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>©️ 2026 Outcast Creative. Todos os Direitos Reservados.</span>
+        <span>Curitiba, PR • Estética com Propósito.</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="joinchat">
+    <div class="chat-bubble">
+      <div class="chat-header">
+        <div class="chat-avatar">O</div>
+        <div class="chat-info">
+          <h4>Estrategista Outcast</h4>
+          <span>Online Agora</span>
+        </div>
+      </div>
+      <div class="chat-text">
+        Pronto para transformar clientes casuais em fãs da sua marca? Se quiser saber como construímos comunidades reais, chama aqui. 👇
+      </div>
+      <a href="https://wa.me/5541999999999" target="_blank" rel="noopener" class="chat-link">Falar pelo WhatsApp</a>
+    </div>
+
+    <a href="https://wa.me/5541999999999" target="_blank" rel="noopener" class="chat-trigger" aria-label="Falar no WhatsApp">
+      <div class="chat-badge" aria-hidden="true">1</div>
+      <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.1 0-65.6-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.4-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.5-9.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+    </a>
+  </div>
+
+  <script>
+    // Navbar ao rolar
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 40) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    }, { passive: true });
+
+    // Reveal
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealElements = document.querySelectorAll('.reveal');
+
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+
+      revealElements.forEach(el => observer.observe(el));
+    } else {
+      revealElements.forEach(el => el.classList.add('active'));
+    }
+
+    // Hero
+    setTimeout(() => {
+      const hero = document.querySelector('.hero');
+      if (hero) hero.classList.add('active');
+    }, 100);
+
+    // Menu mobile
+    const drawer = document.getElementById('mobileDrawer');
+    const toggle = document.getElementById('navToggle');
+    const closeBtn = document.getElementById('navClose');
+
+    function openDrawer() {
+      drawer.classList.add('active');
+      drawer.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      drawer.classList.remove('active');
+      drawer.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', () => {
+      if (drawer.classList.contains('active')) closeDrawer();
+      else openDrawer();
+    });
+
+    closeBtn.addEventListener('click', closeDrawer);
+
+    drawer.addEventListener('click', (e) => {
+      if (e.target === drawer) closeDrawer();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('active')) closeDrawer();
+    });
+
+    // Fecha drawer ao clicar em link
+    drawer.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', closeDrawer);
+    });
+
+    // FAQ (novo design)
+    document.querySelectorAll('[data-faq]').forEach(item => {
+      const btn = item.querySelector('button');
+
+      btn.addEventListener('click', () => {
+        const active = item.classList.toggle('active');
+        btn.setAttribute('aria-expanded', active ? 'true' : 'false');
+      });
+    });
+  </script>
+
+</body>
+</html>
