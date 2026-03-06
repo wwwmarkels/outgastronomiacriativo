@@ -1,4 +1,4 @@
-<<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
@@ -90,6 +90,7 @@
       .reveal { transition: none !important; transform: none !important; opacity: 1 !important; }
       .hero-badge { animation: none !important; }
       .marquee-content { animation: none !important; }
+      .marquee-track { animation: none !important; overflow-x: auto; }
     }
 
     .btn {
@@ -393,10 +394,29 @@
       padding-top: 40px;
       border-top: 1px solid var(--stroke);
       display: flex;
-      gap: 40px;
+      gap: 50px; 
       flex-wrap: wrap;
     }
-    .profile strong { color: var(--primary); display: block; font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+    
+    .profile {
+      display: flex;
+      flex-direction: column; 
+      align-items: flex-start; 
+      gap: 16px;
+    }
+    .profile-img {
+      width: 110px; 
+      height: 110px; 
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(0, 78, 173, 0.1);
+      box-shadow: 0 12px 24px rgba(99, 68, 56, 0.12);
+    }
+    .profile-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .profile strong { color: var(--primary); display: block; font-size: 20px; font-weight: 900; margin-bottom: 2px; }
     .profile span { font-size: 13px; font-weight: 700; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
 
     .founders-img {
@@ -447,6 +467,79 @@
       z-index: 2;
     }
 
+    /* SHOOTING PORTFOLIO MARQUEE AUTOMÁTICO */
+    .portfolio-marquee-wrap {
+      width: 100%;
+      overflow: hidden;
+      padding-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    .portfolio-marquee-wrap::before,
+    .portfolio-marquee-wrap::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 8vw;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .portfolio-marquee-wrap::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
+    }
+    .portfolio-marquee-wrap::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg) 0%, transparent 100%);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      will-change: transform;
+    }
+    
+    .marquee-track.left { animation: scroll-left 50s linear infinite; }
+    .marquee-track.right { animation: scroll-right 50s linear infinite; }
+
+    .portfolio-marquee-wrap:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    .portfolio-item {
+      width: clamp(160px, 15vw, 260px);
+      aspect-ratio: 4/5;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--stroke);
+      flex-shrink: 0;
+      box-shadow: 0 10px 30px rgba(99, 68, 56, 0.08);
+      transform: translateZ(0); 
+    }
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .portfolio-item:hover img {
+      transform: scale(1.08);
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes scroll-right {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+
     /* CASES */
     .cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; }
     .case-card {
@@ -477,7 +570,6 @@
 
     /* FAQ */
     .faq-wrap { max-width: 1100px; margin: 0 auto; }
-
     .faq-title { margin-bottom: 34px; }
     .faq-title h2 {
       font-family: var(--font-heading);
@@ -486,14 +578,8 @@
       line-height: 1.1;
       color: var(--ink);
     }
-
     .faq-list { border-top: 1px solid var(--faq-divider); }
-
-    .faq-item {
-      border-bottom: 1px solid var(--faq-divider);
-      padding: 48px 0;
-    }
-
+    .faq-item { border-bottom: 1px solid var(--faq-divider); padding: 48px 0; }
     .faq-question {
       width: auto;
       background: var(--faq-bg);
@@ -504,23 +590,19 @@
       font-size: 34px;
       color: var(--ink);
       cursor: pointer;
-
       display: inline-flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-
       transition: background .25s ease, border-color .25s ease, transform .25s ease;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
-
     .faq-question:hover {
       background: var(--faq-hover);
       border-color: var(--faq-plus);
       transform: translateY(-1px);
     }
-
     .faq-icon {
       font-size: 34px;
       line-height: 1;
@@ -530,26 +612,22 @@
       transition: transform .25s ease;
       flex: 0 0 auto;
     }
-
     .faq-answer {
       max-height: 0;
       overflow: hidden;
       transition: max-height .45s ease, opacity .35s ease, margin-top .35s ease;
       opacity: 0;
       margin-top: 0;
-
       font-size: 18px;
       color: rgba(99, 68, 56, 0.9);
       line-height: 1.7;
       max-width: 900px;
     }
-
     .faq-item.active .faq-answer {
       max-height: 360px;
       opacity: 1;
       margin-top: 18px;
     }
-
     .faq-item.active .faq-icon { transform: rotate(45deg); }
 
     /* CTA + CALENDÁRIO */
@@ -638,74 +716,72 @@
 
     /* RESPONSIVIDADE */
     @media (max-width: 1024px) {
-      section { padding: clamp(64px, 8vw, 120px) 0; }
-
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: clamp(28px, 6vw, 60px);
-        padding: calc(clamp(128px, 14vw, 170px) + var(--safe-top)) 0 clamp(56px, 7vw, 90px);
-      }
-      .hero p { margin: 0 auto 36px; }
-      .hero-actions { justify-content: center; }
-      .hero-img { max-width: 720px; margin: 0 auto; transform: none; }
+      .hero { grid-template-columns: 1fr; gap: clamp(28px, 6vw, 60px); padding: calc(clamp(128px, 14vw, 170px) + var(--safe-top)) 0 clamp(56px, 7vw, 90px); }
+      .hero p { margin: 0 0 36px 0; max-width: 90%; }
+      .hero-actions { justify-content: flex-start; }
+      .hero-img { max-width: 720px; transform: none; }
+      .hero-visual { margin-top: 20px; }
       .hero-visual:hover .hero-img { transform: none; }
-      .hero-badge { left: 12px; bottom: -16px; }
-
+      .hero-badge { left: -16px; bottom: -16px; }
+      
+      section { padding: clamp(64px, 8vw, 120px) 0; }
       .attack-grid { grid-template-columns: 1fr; }
-
-      .founders-block {
-        grid-template-columns: 1fr;
-        padding: 60px 40px;
-        text-align: center;
-        gap: 46px;
-      }
+      .founders-block { grid-template-columns: 1fr; padding: 60px 40px; text-align: center; gap: 46px; }
       .founders-profiles { justify-content: center; }
-
       .method-grid, .cases-grid { grid-template-columns: 1fr; gap: 40px; }
-
+      
       .footer-grid { flex-direction: column; text-align: center; }
       .footer-logo img { margin: 0 auto 24px; }
-      .footer-nav { flex-wrap: wrap; justify-content: center; width: 100%; }
+      .footer-nav { flex-wrap: wrap; justify-content: center; width: 100%; gap: 60px; }
+      .footer-copy { margin: 0 auto; }
     }
 
     @media (max-width: 768px) {
       nav { height: 80px; }
       nav.scrolled { height: 72px; }
-
       .nav-actions { display: none; }
       .nav-toggle { display: inline-flex; }
-
       .logo-img { height: 50px; }
       nav.scrolled .logo-img { height: 44px; }
-
+      
       .wrap { padding: 26px var(--pad-x); }
-
-      .hero { padding: calc(120px + var(--safe-top)) 0 56px; }
-
-      .hero h1 { font-size: clamp(36px, 10vw, 46px); line-height: 1.03; margin-bottom: 18px; }
-      .hero p { font-size: 17px; margin-bottom: 28px; max-width: 620px; }
-
-      .btn { width: 100%; padding: 18px 24px; font-size: 13px; min-height: 52px; }
-      .hero-actions { flex-direction: column; width: 100%; }
-
-      .hero-badge { width: 98px; height: 98px; font-size: 10px; bottom: -12px; left: 10px; }
-
-      .attack-card { padding: 38px 22px; }
-      .founders-block { padding: 46px 22px; border-radius: 20px; }
-      .method-card { padding: 38px 22px; }
-      .case-content { padding: 28px 18px; }
-
+      .section-header { margin-bottom: 56px; }
+      .section-header h2 { font-size: clamp(32px, 8vw, 40px); }
+      
+      /* Ajuste Hero: Bloco centralizado na tela, mas com texto fluindo da esquerda pra direita */
+      .hero { padding: calc(130px + var(--safe-top)) 0 56px; text-align: center; }
+      .hero-content {
+        margin: 0 auto;
+        max-width: 350px; /* Restringe a largura para o bloco ficar perfeitamente no meio do celular */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Todo o conteúdo dentro do bloco alinha à esquerda */
+      }
+      .hero h1 { font-size: clamp(30px, 8.5vw, 36px); line-height: 1.15; margin-bottom: 16px; text-align: left; width: 100%; }
+      .hero p { font-size: 15.5px; line-height: 1.6; margin-bottom: 32px; text-align: left; width: 100%; }
+      .btn { width: 100%; padding: 18px 24px; font-size: 13px; min-height: 52px; text-align: center; }
+      .hero-actions { flex-direction: column; width: 100%; gap: 14px; }
+      
+      .hero-badge { width: 90px; height: 90px; font-size: 9px; top: -15px; left: -10px; bottom: auto; }
+      
+      .attack-card { padding: 48px 24px; }
+      .founders-block { padding: 56px 24px; border-radius: 20px; gap: 40px; }
+      .method-card { padding: 48px 24px; }
+      .case-content { padding: 36px 24px; }
+      
       .faq-item { padding: 40px 0; }
       .faq-question { font-size: 22px; padding: 12px 16px; width: 100%; }
       .faq-icon { font-size: 26px; }
       .faq-answer { font-size: 16px; }
-
+      
       .cta-area { padding: 78px 0; }
       .calendar-container { height: 820px; border-radius: 18px; }
-
+      
+      .footer-nav { flex-direction: column; gap: 40px; align-items: center; }
+      .footer-col { display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .footer-col a:hover { padding-left: 0; color: var(--primary); }
       .footer-bottom { flex-direction: column; gap: 18px; text-align: center; }
-
+      
       .chat-bubble { display: none; }
       .chat-trigger { width: 64px; height: 64px; }
     }
@@ -715,10 +791,10 @@
     }
 
     @media (max-width: 380px) {
-      .hero p { font-size: 16px; }
+      .hero p { font-size: 15px; } /* Ajuste extra pra celulares bem pequenos */
       .tag-pill { font-size: 10px; letter-spacing: 2px; padding: 7px 16px; }
       .chat-trigger { width: 60px; height: 60px; }
-      .hero-badge { left: 8px; }
+      .hero-badge { top: -10px; left: 0px; }
     }
 
     @media (min-width: 1400px) {
@@ -762,21 +838,21 @@
   <section class="hero wrap reveal">
     <div class="hero-content">
       <div class="tag-pill">Curitiba & Florianópolis</div>
-
+      
       <h1>
         Sua marca é um<br>
         <span class="hero-highlight">destino cobiçado</span> ou<br>
         só mais uma no feed?
       </h1>
-
+      
       <p>Construímos marcas-destino para o setor gastronômico. Unimos branding com alma, estética autêntica e uma estratégia de influenciadores 360º que transforma clientes em uma comunidade apaixonada.</p>
-
+      
       <div class="hero-actions">
         <a href="#agendar" class="btn primary">Agendar agora uma conversa: 15min</a>
         <a href="#concorrencia" class="btn outline">Conhecer a Abordagem</a>
       </div>
     </div>
-
+    
     <div class="hero-visual">
       <img src="https://static.wixstatic.com/media/675661_a63273ba5a234d9da8ccca11b39ecd24~mv2.jpg" alt="Estratégia Outcast" class="hero-img" loading="lazy" decoding="async">
       <div class="hero-badge" aria-hidden="true">Skin in<br>The Game</div>
@@ -811,14 +887,14 @@
           <p>Focam em dancinhas e números inflados, contratando influenciadores aleatórios que não conversam com a essência do seu salão.</p>
           <div class="verdict">✕ Público desqualificado e zero retenção</div>
         </div>
-
+        
         <div class="attack-card">
           <div class="tag-pill dark" style="background: rgba(255,255,255,0.1); color: #fff; border:none;">O Horóscopo Corporativo</div>
           <h3>O Visual Sem Alma</h3>
           <p>Falam sobre arquétipos e teorias rasas, entregando uma estética engessada que não gera conexão genuína com quem consome.</p>
           <div class="verdict">✕ Não cria pertencimento ou relacionamento</div>
         </div>
-
+        
         <div class="attack-card outcast-model">
           <div class="tag-pill" style="background: #fff; color: var(--primary); border:none;">A Trindade Outcast</div>
           <h3>A Marca-Destino 360º</h3>
@@ -836,15 +912,21 @@
         <h2>Nós construímos as nossas próprias comunidades.</h2>
         <p>A grande fraqueza da maioria das agências é olhar para a sua marca apenas de fora. A Outcast nasceu da frustração de ver negócios incríveis operando com uma comunicação genérica.</p>
         <p>O nosso maior diferencial é a <strong>Empatia Operacional</strong>. Nós operamos nossos próprios negócios na gastronomia e sabemos exatamente como a estética com alma, alinhada à Relações Públicas, transforma clientes casuais em fãs do seu nome.</p>
-
+        
         <div class="founders-profiles">
           <div class="profile">
-            <strong>Muri</strong>
-            <span>CEO • Estratégia Business</span>
+            <img src="https://i.ibb.co/svyZR0bG/Murilo-na-Straccia.jpg" alt="Muri" class="profile-img">
+            <div class="profile-text">
+              <strong>Muri</strong>
+              <span>CEO • Estratégia Business</span>
+            </div>
           </div>
           <div class="profile">
-            <strong>Nalu</strong>
-            <span>COO • Branding com Alma</span>
+            <img src="https://i.ibb.co/Rm1QB1T/imagem-2026-03-06-150504198.png" alt="Nalu" class="profile-img">
+            <div class="profile-text">
+              <strong>Nalu</strong>
+              <span>COO • Branding com Alma</span>
+            </div>
           </div>
         </div>
       </div>
@@ -867,13 +949,13 @@
         <h3>OUTfoundation</h3>
         <p>O alicerce da sua cultura. Redefinimos a identidade e o tom de voz da sua marca, curando a sua "crise de identidade" para que você construa um DNA único e memorável.</p>
       </div>
-
+      
       <div class="method-card">
         <div class="method-num">02</div>
         <h3>Boutique Visual</h3>
         <p>Narrativa e audiovisual. Produzimos a estética visceral e mostramos os bastidores humanizados que geram um desejo imediato pelo seu espaço e pelo seu produto.</p>
       </div>
-
+      
       <div class="method-card">
         <div class="method-num">03</div>
         <h3>Comunidade & RP</h3>
@@ -882,7 +964,70 @@
     </div>
   </section>
 
-  <section class="wrap reveal" id="portfolio">
+  <section class="reveal" id="shooting">
+    <div class="wrap" style="padding-bottom: 0;">
+      <div class="section-header center" style="margin-bottom: 40px;">
+        <div class="tag-pill">Nosso Olhar</div>
+        <h2>Shooting Portfólio.</h2>
+        <p>A estética que gera desejo visceral e corta o ruído da concorrência. Nenhuma destas fotos é de banco de imagem: tudo produzido na trincheira das operações que cuidamos.</p>
+      </div>
+    </div>
+    
+    <div class="portfolio-marquee-wrap">
+      <div class="marquee-track left" aria-label="Galeria de fotos de produtos">
+        <div class="portfolio-item"><img src="https://i.ibb.co/XkfpWLdj/image.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/tp1kj6JP/IMG-2187.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/xtfsw43k/Baggio-Osorio-18.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/KkhkZw4/02.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/cKdGZWMw/IMG-2195.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/WWTphp88/bg-12.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/NnT3jfBz/BURRICO-50.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/vGz6qWz/IMG-2205.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/YF5YKHtv/bg-38.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/hx9Jff22/BURRICO-103.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/27d1s2Z6/IMG-2207.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/21zztVv5/DSC05721.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/Z61N5tw1/Foto-20-03-2024-19-30-28.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/hFd2zcXC/IMG-2208.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/0p5RpNKy/Madre-Parma-Rucula-Burrata-foto-Priscilla-Fiedler-2.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/Q7cFhsdW/Foto-20-03-2024-19-31-05.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/bRNMn0Xx/IMG-2217.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/fzBYFcfK/Madre-Parma-Rucula-Burrata-foto-Priscilla-Fiedler-6.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/Fb3bBPW6/Foto-20-03-2024-19-31-10.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/vxBNpNBN/IMG-2231.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/MyKg9tZz/Madre-Pepperoni-foto-Priscilla-Fiedler-2.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/jvFp7GWN/IMG-7388.jpg" loading="lazy" alt="Food Shooting"></div>
+      </div>
+
+      <div class="marquee-track right" aria-label="Galeria de fotos de produtos">
+        <div class="portfolio-item"><img src="https://i.ibb.co/n4dGSqw/IMG-2235.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/KccxPq24/Madre-Pepperoni-foto-Priscilla-Fiedler-4.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/JR3LD3ch/IMG-7423.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/WvXvv5Jm/IMG-2237.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/WWtszfRP/Pizzare-Brocolis-Bacon-foto-Priscilla-Fiedler-2.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/C3Y0TQRK/PENELOPE-1.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/gZ0PnGhG/IMG-2242.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/d0r07TG6/Pizzare-Marguerita-foto-Priscilla-Fiedler-2.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/DX4LpxB/penelope-4.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/wN7ZkyVB/IMG-2249.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/q2cwH0f/Pizzare-Marguerita-foto-Priscilla-Fiedler-6.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/HpFjTwSY/penelope-9.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/yB7xh9B1/IMG-2251.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/QvMBqXPB/penelope-15.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/spg7Bkys/IMG-2272.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/d4q1M4Dn/penelope-19.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/21qYVy6f/IMG-2278.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/KcxPWSZw/PENELOPE-106.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/JwPTZ3bT/IMG-2305.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/ccqHSTMk/PENELOPE-115.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/MXcKkGB/IMG-2315.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/0jFsmJFc/PENELOPE-228.jpg" loading="lazy" alt="Food Shooting"></div>
+        <div class="portfolio-item"><img src="https://i.ibb.co/60Z5MHCg/PENELOPE-243.jpg" loading="lazy" alt="Food Shooting"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap reveal" id="portfolio-cases">
     <div class="section-header center">
       <div class="tag-pill">Portfólio Real</div>
       <h2>As marcas que construímos.</h2>
@@ -892,7 +1037,7 @@
     <div class="cases-grid">
       <div class="case-card">
         <div class="case-media">
-          <img src="https://i.ibb.co/8L0mCV3Z/image.png" alt="Penélope Bar" loading="lazy" decoding="async">
+          <img src="https://i.ibb.co/nNjNdmfB/image.png" alt="Penélope Bar" loading="lazy" decoding="async">
         </div>
         <div class="case-content">
           <span class="tag-pill" style="align-self: flex-start; margin-bottom: 24px;">Operação Própria</span>
@@ -1012,7 +1157,7 @@
           <div class="footer-col">
             <h5>Estratégia</h5>
             <a href="#metodo">Metodologia</a>
-            <a href="#portfolio">Skin in the Game</a>
+            <a href="#portfolio-cases">Skin in the Game</a>
             <a href="#agendar">Conhecer a Outcast</a>
           </div>
           <div class="footer-col">
@@ -1053,6 +1198,12 @@
   </div>
 
   <script>
+    // Duplica o conteúdo do Marquee de imagens
+    document.querySelectorAll('.marquee-track').forEach(track => {
+      const content = track.innerHTML;
+      track.innerHTML = content + content;
+    });
+
     // Navbar ao rolar
     window.addEventListener('scroll', () => {
       const nav = document.getElementById('navbar');
@@ -1060,7 +1211,7 @@
       else nav.classList.remove('scrolled');
     }, { passive: true });
 
-    // Reveal
+    // Reveal (Animações)
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealElements = document.querySelectorAll('.reveal');
 
@@ -1079,7 +1230,7 @@
       revealElements.forEach(el => el.classList.add('active'));
     }
 
-    // Hero
+    // Hero ativo imediato
     setTimeout(() => {
       const hero = document.querySelector('.hero');
       if (hero) hero.classList.add('active');
